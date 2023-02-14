@@ -148,10 +148,31 @@ export default class Store {
         }
     }
 
+    async ChangePhoto(data) {
+        try {
+            const response = await AuthService.changePhoto(data);
+        } catch (e) {
+            return {error: e}
+        }
+    }
+
     async updateUser(data) {
         try {
             const response = await AuthService.updateUser(data);
             const userInfo = {...JSON.parse(localStorage.getItem('user')), ...response.data.user, ...response.data.profile}
+            localStorage.setItem('user', JSON.stringify(userInfo))
+            this.setAuth(true)
+            this.setUser(userInfo)
+            return {success: true}
+        } catch (e) {
+            return {error: e}
+        }
+    }
+
+    async getUserActualData() {
+        try {
+            const response = await AuthService.getUserActualData();
+            const userInfo = {...JSON.parse(localStorage.getItem('user')), ...response.data.user, ...response.data.profile_user}
             localStorage.setItem('user', JSON.stringify(userInfo))
             this.setAuth(true)
             this.setUser(userInfo)

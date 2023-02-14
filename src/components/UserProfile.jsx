@@ -1,10 +1,13 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { AiOutlineLogout } from "react-icons/ai";
-import { useParams, useNavigate } from "react-router-dom";
+import { AiOutlineCloudUpload } from "react-icons/ai";
+import { MdDelete } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import { Alert } from "antd";
 
 import Spinner from "./Spinner";
 import { Context } from "../index";
+import { useEffect } from "react";
 
 const UserProfile = () => {
   const { store } = useContext(Context);
@@ -36,6 +39,40 @@ const UserProfile = () => {
     bool: false,
     message: "",
   });
+
+  const [imageAsset, setImageAsset] = useState({
+    url: null,
+    file: null
+  });
+  const [wrongImageType, setWrongImageType] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+
+  const uploadImage = (e) => {
+    const { type } = e?.target?.files[0];
+    let data = new FormData();
+
+    if(type === 'image/png' || type === 'image/svg' || type === 'image/jpeg' || type === 'image/gif' || type === 'image/tiff') {
+      setWrongImageType(false);
+      setLoading(true);
+      setImageAsset(() => {
+        return {file: e.target.files[0], url: URL.createObjectURL(e.target.files[0])}
+      })
+
+      data.append('photo', e.target.files[0], e.target.files[0].name)
+      store.ChangePhoto(data)
+        .then(() => {
+          store.getUserActualData()
+            .then(() => window.location.reload())
+        })
+      
+      setLoading(false);
+
+      } else {
+        setWrongImageType(true);
+    }
+  }
+
 
   const logout = () => {
     localStorage.clear();
@@ -78,6 +115,7 @@ const UserProfile = () => {
 
   if (!userInfo) return <Spinner message="Loading profile" />;
 
+
   return (
     <div className="relative pb-2 h-full justify-center items-center">
       <div className="flex flex-col pb-5">
@@ -88,11 +126,46 @@ const UserProfile = () => {
               src="https://source.unsplash.com/1600x900/?nature,photography,technology"
               alt="user-pic"
             />
-            <img
+            {/* <img
               className="rounded-full w-20 h-20 -mt-10 shadow-xl object-cover"
               src={"https://diploms.pythonanywhere.com" + userInfo.photo}
               alt="user-pic"
-            />
+            /> */}
+            <div className="rounded-full w-20 h-20 -mt-10 shadow-xl object-cover">
+            {loading && <Spinner />}
+            {wrongImageType && <p>Дұрыс сурет жүктеніз</p>}
+            {!imageAsset.file ? (
+              <label>
+                <div className="flex flex-col items-center justify-center h-full">
+                  <div className="flex flex-col justify-center items-center">
+                    <p className="font-bold text-2xl">
+                      <AiOutlineCloudUpload />
+                    </p>
+                  </div>
+                </div>
+                <input
+                  type="file"
+                  name="upload-image"
+                  onChange={uploadImage}
+                  className="w-0 h-0" 
+                />
+              </label>
+            ) : (
+              <div className="relative h-full">
+                <img src={imageAsset?.url} alt="uploaded-pic" className="rounded-full object-cover h-full w-full" />
+                <button
+                  type="button"
+                  className="absolute bottom-0 right-0 p-1 rounded-full bg-white text-xl cursor-pointer outline-none hover:shadow-md transition-all duration-500 ease-in-out"
+                  onClick={() => setImageAsset({
+                    file: null,
+                    url: null
+                  })}
+                >
+                  <MdDelete />
+                </button>
+              </div>
+            )}
+          </div>
           </div>
           <h1 className="font-bold text-3xl text-center mt-3">
             {userInfo.username}

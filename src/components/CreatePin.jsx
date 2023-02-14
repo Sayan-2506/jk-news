@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { AiOutlineCloud, AiOutlineCloudUpload } from "react-icons/ai";
+import { AiOutlineCloudUpload } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 

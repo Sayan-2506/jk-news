@@ -26,7 +26,17 @@ export default class AuthService {
         })    
     }
 
+    static async changePhoto(data) {
+        return $api.post('profile/photo/add', data, {
+            headers: { 'content-type': 'multipart/form-data' }
+        })    
+    }
+
     static async updateUser({ username, firstName, lastName, surname, email, nameResidentialComplex, entrance, floor, roomNumber }) {
         return $api.put('profile/update', {username, first_name: firstName, last_name: lastName, surname, email, nameResidentialComplex, entrance, floor, roomNumber})
+    }
+
+    static async getUserActualData() {
+        return $api.get('profile')
     }
 }

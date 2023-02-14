@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import { Feed, PinDetail, Navbar } from '../components';
 import CreatePin from '../components/CreatePin';
 import Search from '../components/Search';
+import CalendarEvent from '../components/CalendarEvent'
 
 
 const Pins = () => {
@@ -19,6 +20,7 @@ const Pins = () => {
         
 
           <Route path="/" element={<Feed />} />
+          <Route path="/calendar" element={<CalendarEvent />} />
           <Route path="pin-detail/:pinId" element={<PinDetail />} />
           <Route path="category/:categoryId" element={<Feed />} />
           <Route path="/create-pin" element={<CreatePin />} />
