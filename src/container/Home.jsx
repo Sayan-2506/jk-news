@@ -35,6 +35,10 @@ const Home = () => {
       }
     }, [])
 
+    const updatePage = () => {
+      window.location.reload();
+    }
+
   return (
     <div className='flex bg-gray-50 md:flex-row flex-col h-screen transaction-height duration-75 ease-out'>
       <div className="hidden md:flex h-screen flex-initial">
@@ -45,7 +49,7 @@ const Home = () => {
         <div className="p-2 w-full flex flex-row justify-between items-center shadow-md">
           <HiMenu fontSize={40} className='cursor-pointer' onClick={() => setToggleSidebar(true)} />
           <Link to='/home'>
-            <img src={logo} alt="logo" className='w-28'/>
+            <img src={logo} alt="logo" className='w-28' onClick={updatePage}/>
           </Link>
           <Link to={`user-profile/`}>
             <img src={'https://diploms.pythonanywhere.com' + user.photo} alt="logo" className='w-10 h-10 rounded-full'/>

@@ -10,6 +10,7 @@ const Feed = () => {
   const [pins, setPins] = useState();
   const [loading, setLoading] = useState(false);
   const { categoryId } = useParams();
+  const [first, setfirst] = useState()
 
   const {store} = useContext(Context);
 
@@ -33,6 +34,7 @@ const Feed = () => {
             .catch((e) => console.log(e));
     }
   }, [categoryId])
+
 
   const ideaName = 'жаналықтар';
   if (loading) {
