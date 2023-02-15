@@ -61,10 +61,10 @@ const Home = () => {
       )}
       </div>
 
-      <div className="pb-2 flex-1 h-screen overflow-y-scroll" ref={scrollRef}>
+      <div className="pb-2 flex-1 h-screen overflow-y-scroll" ref={scrollRef} onClick={() => setToggleSidebar(false)}>
         <Routes>
           <Route path='/user-profile/' element={<UserProfile />} />
-          <Route path='/*' element={<Pins />} />
+          <Route path='/*' element={<Pins closeToggle={setToggleSidebar} />} />
         </Routes>
       </div>
     </div>

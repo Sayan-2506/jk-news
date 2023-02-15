@@ -186,13 +186,13 @@ const UserProfile = () => {
               description={error.message}
               type="error"
               showIcon
-              className="z-10 text-center absolute top-full left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+              className="z-10 text-center absolute h-16 -bottom-2/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
             />
           )}
           {success.bool && (
             <Alert
               message={success.message}
-              className="z-10 text-center absolute top-full left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+              className="z-10 text-center absolute h-16 -bottom-2/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
               type="success"
               showIcon
             />

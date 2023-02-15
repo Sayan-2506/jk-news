@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { BsFillArrowUpRightCircleFill } from "react-icons/bs";
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { AiTwotoneLike } from "react-icons/ai";
 import { FaComment } from "react-icons/fa";
 import { Context } from "../index";
@@ -15,7 +14,6 @@ const Pin = ({ pin }) => {
     likes: likes.length
   });
   const {store} = useContext(Context);
-
 
   const likeHandler = () => {
     if (like.isLike && like.likes > 0) {
@@ -56,7 +54,7 @@ const Pin = ({ pin }) => {
           </span>
           <div className="ml-2 flex items-center space-x-2">
             <div onClick={likeHandler} className="flex items-center">
-              <span className="mr-1">{<AiTwotoneLike />}</span>
+              <span className={`mr-1 ${like.isLike && 'text-red-500'}`}>{<AiTwotoneLike />}</span>
               <span>{like.likes}</span>
             </div>
 
